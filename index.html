@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem("PaymentforMiniChatgptcourse") !== "true") {
+          window.location.replace("https://mini-chatgpt-job-course.vercel.app/");
+        }
+      } catch (error) {
+        window.location.replace("https://mini-chatgpt-job-course.vercel.app/");
+      }
+    })();
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Using ChatGPT to Automate Your Job Search</title>
@@ -882,7 +894,7 @@
         <h2>What You Will Build</h2>
         <div class="stats">
           <div class="stat">
-            <strong>11</strong>
+            <strong>10</strong>
             <span>Organized course modules</span>
           </div>
           <div class="stat">
@@ -1273,34 +1285,12 @@
       
 
 
-      <article class="module">
-        <div class="module-header">
-          <div class="module-number">10</div>
-          <div>
-            <h3>Complete Workflow Summary</h3>
-            <p>A simple step-by-step view of the entire ChatGPT job search system.</p>
-          </div>
-        </div>
+      
 
-        <div class="workflow">
-          <div class="step">Upload your resume into ChatGPT.</div>
-          <div class="step">Ask ChatGPT to act as a senior recruiter.</div>
-          <div class="step">Get twenty suitable job titles and ATS keywords.</div>
-          <div class="step">Ask ChatGPT to rewrite your resume into a master template.</div>
-          <div class="step">Use the Google XYZ formula to improve resume achievements.</div>
-          <div class="step">Turn on Agent mode.</div>
-          <div class="step">Ask ChatGPT Agent to search LinkedIn and Indeed.</div>
-          <div class="step">Find jobs posted in the last seven days.</div>
-          <div class="step">Build a spreadsheet with job links and match scores.</div>
-          <div class="step">Create custom-tailored resume versions for each job.</div>
-          <div class="step">Apply to the highest-matched jobs.</div>
-          <div class="step">Customize each application based on the job description.</div>
-        </div>
-      </article>
 
       <article class="module" id="prompts">
         <div class="module-header">
-          <div class="module-number">11</div>
+          <div class="module-number">10</div>
           <div>
             <h3>All Prompts Used in the Course</h3>
             <p>Use these prompts exactly as shown in the course.</p>
