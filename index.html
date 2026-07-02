@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using ChatGPT to Automate Your Job Search</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #000000;
+      --muted: #000000;
+      --blue: #2563eb;
+      --purple: #7c3aed;
+      --pink: #ec4899;
+      --orange: #f97316;
+      --green: #10b981;
+      --yellow: #facc15;
+      --card: #ffffff;
+      --soft-blue: #eff6ff;
+      --soft-purple: #f5f3ff;
+      --soft-pink: #fdf2f8;
+      --soft-orange: #fff7ed;
+      --soft-green: #ecfdf5;
+      --border: #e5e7eb;
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body, h1, h2, h3, h4, p, span, div, a, li, strong {
+      color: #000000;
+    }
+
+
+    .graphic-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+      background-size: 54px 54px;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.72;
+    }
+
+    .blob-one {
+      width: 330px;
+      height: 330px;
+      top: 80px;
+      left: -120px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.28), rgba(37, 99, 235, 0.02) 68%);
+    }
+
+    .blob-two {
+      width: 280px;
+      height: 280px;
+      top: 260px;
+      right: -90px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.24), rgba(236, 72, 153, 0.02) 70%);
+    }
+
+    .blob-three {
+      width: 360px;
+      height: 360px;
+      bottom: -120px;
+      left: 35%;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.20), rgba(249, 115, 22, 0.02) 72%);
+    }
+
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 18px solid rgba(124, 58, 237, 0.14);
+    }
+
+    .ring-one {
+      width: 170px;
+      height: 170px;
+      top: 145px;
+      right: 18%;
+    }
+
+    .ring-two {
+      width: 110px;
+      height: 110px;
+      bottom: 180px;
+      left: 10%;
+      border-color: rgba(16, 185, 129, 0.16);
+    }
+
+    .dots {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background-image: radial-gradient(rgba(37, 99, 235, 0.34) 2px, transparent 2px);
+      background-size: 18px 18px;
+      border-radius: 24px;
+    }
+
+    .dots-one {
+      top: 520px;
+      left: 4%;
+    }
+
+    .dots-two {
+      right: 6%;
+      bottom: 430px;
+      background-image: radial-gradient(rgba(236, 72, 153, 0.30) 2px, transparent 2px);
+    }
+
+    .zigzag {
+      position: absolute;
+      font-size: 44px;
+      font-weight: 900;
+      color: rgba(249, 115, 22, 0.45);
+      transform: rotate(18deg);
+    }
+
+    .zigzag-one {
+      top: 430px;
+      right: 23%;
+    }
+
+    .zigzag-two {
+      bottom: 300px;
+      left: 26%;
+      color: rgba(37, 99, 235, 0.40);
+      transform: rotate(-16deg);
+    }
+
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      color: #000000;
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 70px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 34px;
+      color: #000000;
+      padding: 64px 36px;
+      box-shadow: 0 24px 70px rgba(37, 99, 235, 0.14);
+      margin-bottom: 34px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      right: -120px;
+      top: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.22), rgba(37, 99, 235, 0.02) 68%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      left: -90px;
+      bottom: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.20), rgba(236, 72, 153, 0.02) 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #eff6ff, #fdf2f8);
+      border: 1px solid #bfdbfe;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+      margin-bottom: 20px;
+      color: #000000;
+    }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.02;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 760px;
+      color: #000000;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      border-radius: 16px;
+      font-weight: 800;
+      padding: 13px 18px;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #bfdbfe;
+    }
+
+    .btn-secondary {
+      color: #000000;
+      border: 1px solid #fbcfe8;
+      background: #fdf2f8;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      margin-bottom: 34px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+    }
+
+    .card h2 {
+      font-size: 28px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      border-radius: 20px;
+      padding: 18px;
+      background: var(--soft-blue);
+      border: 1px solid #dbeafe;
+    }
+
+    .stat:nth-child(2) {
+      background: var(--soft-purple);
+      border-color: #ede9fe;
+    }
+
+    .stat:nth-child(3) {
+      background: var(--soft-green);
+      border-color: #d1fae5;
+    }
+
+    .stat:nth-child(4) {
+      background: var(--soft-orange);
+      border-color: #fed7aa;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 14px;
+    }
+
+    .section-title {
+      margin: 42px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title h2 {
+      font-size: 34px;
+      letter-spacing: -0.8px;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--pink));
+      box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.08);
+    }
+
+    .modules {
+      display: grid;
+      gap: 22px;
+    }
+
+    .module {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.07);
+      overflow: hidden;
+    }
+
+    .module::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--blue), var(--purple), var(--pink));
+    }
+
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .module-number {
+      flex: 0 0 auto;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      color: #000000;
+      background: linear-gradient(135deg, #dbeafe, #f5d0fe);
+      font-weight: 900;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+    }
+
+    .module h3 {
+      font-size: 25px;
+      line-height: 1.25;
+      margin-bottom: 4px;
+      letter-spacing: -0.4px;
+    }
+
+    .lesson {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: 20px;
+      background: #f8fafc;
+      border: 1px solid #eef2f7;
+    }
+
+    .lesson h4 {
+      font-size: 19px;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .lesson p {
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .list {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #000000;
+      font-size: 13px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #bbf7d0, #dcfce7);
+      margin-top: 2px;
+    }
+
+    .prompt-box {
+      margin-bottom: 14px;
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #eff6ff, #fdf2f8, #fff7ed);
+      color: #000000;
+      border: 1px solid #dbeafe;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    .prompt-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #000000;
+      margin-bottom: 8px;
+    }
+
+    .prompt-text {
+      font-size: 16px;
+      line-height: 1.65;
+      color: #000000;
+      margin-bottom: 14px;
+    }
+
+    .example {
+      background: linear-gradient(135deg, var(--soft-green), #ffffff);
+      border: 1px solid #bbf7d0;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .example strong {
+      color: #047857;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .step {
+      counter-increment: step;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      font-weight: 700;
+      color: #475569;
+      position: relative;
+      min-height: 104px;
+    }
+
+    .step::before {
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      color: white;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .prompt-card {
+      padding: 22px;
+      border-radius: 24px;
+      background: white;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
+    }
+
+    .prompt-card h4 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--purple);
+    }
+
+    .prompt-card p {
+      color: #334155;
+      font-weight: 650;
+    }
+
+    .footer {
+      margin-top: 42px;
+      padding: 30px;
+      text-align: center;
+      border-radius: 28px;
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      box-shadow: 0 18px 50px rgba(37, 99, 235, 0.10);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .footer p {
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+
+    .hero h1 {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 72%;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #2563eb, #ec4899, #f97316);
+      opacity: 0.75;
+    }
+
+    .card,
+    .module,
+    .prompt-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+    }
+
+    .lesson {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: inset 6px 0 0 rgba(37, 99, 235, 0.16);
+    }
+
+    .module:nth-child(3n + 1) .lesson {
+      box-shadow: inset 6px 0 0 rgba(37, 99, 235, 0.18);
+    }
+
+    .module:nth-child(3n + 2) .lesson {
+      box-shadow: inset 6px 0 0 rgba(236, 72, 153, 0.18);
+    }
+
+    .module:nth-child(3n) .lesson {
+      box-shadow: inset 6px 0 0 rgba(249, 115, 22, 0.18);
+    }
+
+    .overview .card:first-child {
+      border-top: 8px solid #2563eb;
+    }
+
+    .overview .card:last-child {
+      border-top: 8px solid #ec4899;
+    }
+
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #c7d2fe;
+      background: #ffffff;
+      color: #000000;
+      border-radius: 12px;
+      padding: 9px 13px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      background: #eef2ff;
+    }
+
+    .copy-btn.copied {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #000000;
+    }
+
+    .prompt-card p {
+      margin-bottom: 14px;
+    }
+
+
+    .reading-progress {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(520px, calc(100% - 32px));
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #dbeafe;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.14);
+      backdrop-filter: blur(14px);
+      border-radius: 999px;
+      padding: 8px 10px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #ec4899, #f97316);
+      border-radius: 999px;
+      transition: width 0.28s ease;
+    }
+
+    .progress-percent {
+      min-width: 112px;
+      text-align: right;
+      font-size: 12px;
+      font-weight: 900;
+      color: #000000;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+      .reading-progress {
+        bottom: 10px;
+        width: calc(100% - 20px);
+        padding: 7px 9px;
+      }
+
+      .progress-percent {
+        min-width: 82px;
+        font-size: 11px;
+      }
+    }
+
+
+    .disclaimer-box {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff7ed, #eff6ff);
+      border: 1px solid #fed7aa;
+      color: #000000;
+      font-weight: 650;
+      box-shadow: 0 10px 24px rgba(249, 115, 22, 0.08);
+    }
+
+    .disclaimer-box strong {
+      font-weight: 900;
+      color: #000000;
+    }
+
+
+    .agent-guide-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #eff6ff, #fdf2f8);
+      border: 1px solid #bfdbfe;
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.08);
+    }
+
+    .agent-guide-box h4 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #000000;
+    }
+
+    .agent-guide-box p {
+      color: #000000;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .agent-guide-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 900px) {
+      .overview {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow,
+      .prompt-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 34px;
+      color: #000000;
+      padding: 64px 36px;
+      box-shadow: 0 24px 70px rgba(37, 99, 235, 0.14);
+      margin-bottom: 34px;
+    }
+
+      .card,
+      .module {
+        padding: 22px;
+      }
+    }
+
+    @media print {
+      body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      color: #000000;
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+      .hero,
+      .card,
+      .module,
+      .step,
+      .prompt-card,
+      .footer {
+      margin-top: 42px;
+      padding: 30px;
+      text-align: center;
+      border-radius: 28px;
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      box-shadow: 0 18px 50px rgba(37, 99, 235, 0.10);
+      position: relative;
+      overflow: hidden;
+    }
+
+      .btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="graphic-bg" aria-hidden="true">
+    <span class="blob blob-one"></span>
+    <span class="blob blob-two"></span>
+    <span class="blob blob-three"></span>
+    <span class="ring ring-one"></span>
+    <span class="ring ring-two"></span>
+    <span class="dots dots-one"></span>
+    <span class="dots dots-two"></span>
+    <span class="zigzag zigzag-one">✦</span>
+    <span class="zigzag zigzag-two">✦</span>
+  </div>
+
+  <div class="reading-progress" aria-label="Course reading progress">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-percent" id="progressPercent">0% progress</div>
+  </div>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">🚀 AI Job Search Course</div>
+        <h1>Using ChatGPT to Automate Your Job Search</h1>
+        <p>
+          Learn a clear and structured way to use ChatGPT as a smart job search assistant.
+          This course helps you analyze your resume, find suitable roles, identify ATS keywords,
+          use Agent mode, organize job opportunities, and customize applications efficiently.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#modules" class="btn btn-primary">Start Learning</a>
+          <a href="#prompts" class="btn btn-secondary">View Prompts</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="overview">
+      <div class="card">
+        <h2>Course Overview</h2>
+        <p>
+          This course explains a clear and structured way to use ChatGPT as a helpful assistant in your job search.
+          Instead of manually searching for jobs, applying, and customizing each application, this system uses AI
+          to make the process faster and easier.
+        </p>
+        <p>
+          You will learn how to upload your resume, understand your strengths, find suitable job roles, identify ATS
+          (Applicant Tracking System) keywords, rewrite your resume using proven methods, use ChatGPT Agent mode,
+          organize job opportunities, and customize applications efficiently.
+        </p>
+        <p>
+          The main goal of this course is to help you use ChatGPT as a smart job search assistant that saves time,
+          improves accuracy, and increases your chances of getting interviews.
+        </p>
+
+        <div class="disclaimer-box">
+          <strong>Disclaimer:</strong>
+          ChatGPT can help you find jobs, customize resumes, prepare cover letters, and organize applications. Auto-submitting jobs is not guaranteed and may be restricted by some websites. Always review before submitting.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>What You Will Build</h2>
+        <div class="stats">
+          <div class="stat">
+            <strong>11</strong>
+            <span>Organized course modules</span>
+          </div>
+          <div class="stat">
+            <strong>4</strong>
+            <span>Core ChatGPT prompts</span>
+          </div>
+          <div class="stat">
+            <strong>20</strong>
+            <span>Job titles to identify</span>
+          </div>
+          <div class="stat">
+            <strong>ATS</strong>
+            <span>Keyword-focused strategy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title" id="modules">
+      <span class="dot"></span>
+      <h2>Course Modules</h2>
+    </div>
+
+    <section class="modules">
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">1</div>
+          <div>
+            <h3>Understanding the Concept and Strategy</h3>
+            <p>Learn how ChatGPT can support your job search from resume analysis to application customization.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>1.1 What This System Is About</h4>
+          <p>What happens when you ask ChatGPT to apply to five hundred jobs for you?</p>
+          <p>
+            This system is designed to automate and improve the entire job search process. Instead of doing repetitive
+            tasks manually, ChatGPT helps you analyze your resume, find suitable roles, search for job openings, and
+            customize applications.
+          </p>
+          <p>
+            In one example, a person used this method and reportedly got twelve interviews within twenty-four hours.
+            Results may vary, but this shows how powerful AI can be when used with a clear strategy.
+          </p>
+        </div>
+
+        <div class="lesson">
+          <h4>1.2 Key Objectives of This Module</h4>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Resume analysis</div>
+            <div class="list-item"><span class="check">✓</span>Job title identification</div>
+            <div class="list-item"><span class="check">✓</span>ATS keyword extraction</div>
+            <div class="list-item"><span class="check">✓</span>Resume rewriting</div>
+            <div class="list-item"><span class="check">✓</span>Job search automation</div>
+            <div class="list-item"><span class="check">✓</span>Spreadsheet tracking</div>
+            <div class="list-item"><span class="check">✓</span>Customized job applications</div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>1.3 Why This Approach Works</h4>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Reduces manual work</div>
+            <div class="list-item"><span class="check">✓</span>Improves job targeting</div>
+            <div class="list-item"><span class="check">✓</span>Enhances resume quality</div>
+            <div class="list-item"><span class="check">✓</span>Matches ATS requirements</div>
+            <div class="list-item"><span class="check">✓</span>Allows you to apply to more jobs efficiently</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">2</div>
+          <div>
+            <h3>Uploading and Analyzing Your Resume</h3>
+            <p>Start by giving ChatGPT your resume so it can understand your skills and experience.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>2.1 Step 1: Upload Your Resume into ChatGPT</h4>
+          <p>
+            The first step is to upload your resume into ChatGPT. This allows the AI to understand your skills,
+            experience, education, and achievements.
+          </p>
+          <p>
+            Once your resume is uploaded, ChatGPT can start acting like a recruiter and give useful insights about your profile.
+          </p>
+        </div>
+
+        <div class="lesson">
+          <h4>2.2 Prompt</h4>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt</span>
+            <p class="prompt-text">"Act as a senior recruiter. Based on my resume, list the twenty job titles I'm most qualified for and the exact keywords ATS systems scan for in each."</p>
+            <button class="copy-btn" type="button" data-prompt="Act as a senior recruiter. Based on my resume, list the twenty job titles I'm most qualified for and the exact keywords ATS systems scan for in each.">Copy Prompt</button>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>2.3 Purpose of This Prompt</h4>
+          <p>This prompt asks ChatGPT to review your resume like a recruiter. It helps you identify:</p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>The most suitable job roles for your profile</div>
+            <div class="list-item"><span class="check">✓</span>Important keywords used in ATS systems</div>
+            <div class="list-item"><span class="check">✓</span>How well your experience matches market demand</div>
+          </div>
+          <p>This step helps you build a focused job search strategy.</p>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">3</div>
+          <div>
+            <h3>Identifying Job Titles and ATS Keywords</h3>
+            <p>Use ChatGPT to understand the roles and keywords that best match your profile.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>3.1 What Happens in This Step</h4>
+          <p>After you give the prompt, ChatGPT analyzes your resume and provides:</p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>A list of twenty job titles that match your qualifications</div>
+            <div class="list-item"><span class="check">✓</span>A set of ATS keywords for each job title</div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>3.2 Importance of ATS Keywords</h4>
+          <p>
+            Most companies use ATS software to filter resumes before a recruiter sees them. These systems look for
+            specific keywords related to skills, tools, and responsibilities.
+          </p>
+          <p>If your resume does not include these keywords, it may not be selected.</p>
+        </div>
+
+        <div class="lesson">
+          <h4>3.3 Key Insights You Gain</h4>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Which job roles match your experience</div>
+            <div class="list-item"><span class="check">✓</span>Which keywords are important</div>
+            <div class="list-item"><span class="check">✓</span>Which skills to highlight</div>
+            <div class="list-item"><span class="check">✓</span>Which career paths suit you best</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">4</div>
+          <div>
+            <h3>Creating a Master Resume Template</h3>
+            <p>Create a strong resume base that can be customized for different job applications.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>4.1 Step 2: Continue in the Same Chat</h4>
+          <p>
+            After getting job titles and keywords, stay in the same ChatGPT conversation. This helps ChatGPT remember
+            your previous inputs.
+          </p>
+          <p>Now, ask ChatGPT to rewrite your resume into a master template.</p>
+        </div>
+
+        <div class="lesson">
+          <h4>4.2 Prompt</h4>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt</span>
+            <p class="prompt-text">"Rewrite my resume into a master template I can tailor instantly. Use the Google XYZ formula and strip every red flag a hiring manager spots in under ten seconds."</p>
+            <button class="copy-btn" type="button" data-prompt="Rewrite my resume into a master template I can tailor instantly. Use the Google XYZ formula and strip every red flag a hiring manager spots in under ten seconds.">Copy Prompt</button>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>4.3 Purpose of This Prompt</h4>
+          <p>This prompt helps you create a strong master resume that can be easily customized for different jobs.</p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Clear and simple</div>
+            <div class="list-item"><span class="check">✓</span>Professionally structured</div>
+            <div class="list-item"><span class="check">✓</span>ATS-friendly</div>
+            <div class="list-item"><span class="check">✓</span>Focused on achievements</div>
+            <div class="list-item"><span class="check">✓</span>Easy to edit</div>
+            <div class="list-item"><span class="check">✓</span>Free from common mistakes</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">5</div>
+          <div>
+            <h3>Mastering the Google XYZ Formula</h3>
+            <p>Learn how to convert plain resume points into achievement-focused statements.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>5.1 What Is the Google XYZ Formula?</h4>
+          <p>The Google XYZ formula is a simple way to write strong resume points.</p>
+          <div class="example">
+            <strong>The format is:</strong>
+            <p>Accomplished X<br />Measured by Y<br />By doing Z</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>5.2 Example</h4>
+          <p>Instead of writing:</p>
+          <div class="example">“Handled sales calls”</div>
+          <p>You can write:</p>
+          <div class="example">“Increased sales conversions by 20% in 3 months by improving follow-up calls and customer tracking.”</div>
+        </div>
+
+        <div class="lesson">
+          <h4>5.3 Why This Formula Is Effective</h4>
+          <p>This method turns simple statements into clear achievements. It helps hiring managers quickly understand:</p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>What you achieved</div>
+            <div class="list-item"><span class="check">✓</span>How it was measured</div>
+            <div class="list-item"><span class="check">✓</span>What actions you took</div>
+          </div>
+          <p>This makes your resume more effective.</p>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">6</div>
+          <div>
+            <h3>Activating ChatGPT Agent Mode</h3>
+            <p>Use Agent mode to perform advanced tasks like searching platforms and organizing information.</p>
+          </div>
+        </div>
+
+        <div class="agent-guide-box">
+          <h4>How to Use ChatGPT Agent Mode</h4>
+          <p>
+            Type <strong>@agent</strong> in ChatGPT to open Agent Mode.
+          </p>
+          <p>
+            <strong>Note:</strong> Agent Mode is only available in Plus or higher versions. Use the free trial if it is available on your account.
+          </p>
+        </div>
+
+<div class="lesson">
+          <h4>6.1 Step 3: Use Agent Mode</h4>
+          <p>
+            Once your master resume is ready, the next step is to turn on ChatGPT Agent mode. This allows ChatGPT
+            to perform advanced tasks like searching job platforms and organizing information.
+          </p>
+        </div>
+
+        <div class="lesson">
+          <h4>6.2 Prompt</h4>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt</span>
+            <p class="prompt-text">"Go to LinkedIn and Indeed, find every job matching these titles posted in the last seven days. Build me a spreadsheet with the link, match score, and a custom-tailored resume version for each one."</p>
+            <button class="copy-btn" type="button" data-prompt="Go to LinkedIn and Indeed, find every job matching these titles posted in the last seven days. Build me a spreadsheet with the link, match score, and a custom-tailored resume version for each one.">Copy Prompt</button>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>6.3 Purpose of This Prompt</h4>
+          <p>This prompt asks ChatGPT to:</p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Search job platforms like LinkedIn and Indeed</div>
+            <div class="list-item"><span class="check">✓</span>Find relevant job postings</div>
+            <div class="list-item"><span class="check">✓</span>Filter jobs from the last seven days</div>
+            <div class="list-item"><span class="check">✓</span>Organize results into a spreadsheet</div>
+            <div class="list-item"><span class="check">✓</span>Create customized resume versions for each job</div>
+          </div>
+          <p>This step saves a lot of time in finding jobs.</p>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">7</div>
+          <div>
+            <h3>Building and Managing the Job Search Spreadsheet</h3>
+            <p>Track every opportunity clearly so your job search stays organized.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>7.1 Key Components of the Spreadsheet</h4>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Job title</div>
+            <div class="list-item"><span class="check">✓</span>Company name</div>
+            <div class="list-item"><span class="check">✓</span>Job link</div>
+            <div class="list-item"><span class="check">✓</span>Date posted</div>
+            <div class="list-item"><span class="check">✓</span>Location</div>
+            <div class="list-item"><span class="check">✓</span>Match score</div>
+            <div class="list-item"><span class="check">✓</span>Required skills</div>
+            <div class="list-item"><span class="check">✓</span>ATS keywords</div>
+            <div class="list-item"><span class="check">✓</span>Resume notes</div>
+            <div class="list-item"><span class="check">✓</span>Application status</div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>7.2 Benefits of Using a Spreadsheet</h4>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Stay organized</div>
+            <div class="list-item"><span class="check">✓</span>Track your progress</div>
+            <div class="list-item"><span class="check">✓</span>Focus on the best opportunities</div>
+            <div class="list-item"><span class="check">✓</span>Avoid applying to the same job twice</div>
+            <div class="list-item"><span class="check">✓</span>Keep everything clear and structured</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">8</div>
+          <div>
+            <h3>Customizing Job Applications at Scale</h3>
+            <p>Tailor every application based on the job description instead of sending the same resume everywhere.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>8.1 Step 4: Customize Each Application</h4>
+          <p>
+            After finding suitable jobs, the next step is to customize your applications based on each job description.
+          </p>
+        </div>
+
+        <div class="lesson">
+          <h4>8.2 Prompt</h4>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt</span>
+            <p class="prompt-text">"Apply to the top five hundred highest-matched jobs. Customize each application based on the job description."</p>
+            <button class="copy-btn" type="button" data-prompt="Apply to the top five hundred highest-matched jobs. Customize each application based on the job description.">Copy Prompt</button>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>8.3 Purpose of This Prompt</h4>
+          <p>This prompt ensures that each application is tailored to the job.</p>
+          <p>Instead of sending the same resume everywhere, ChatGPT helps you:</p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Highlight relevant skills</div>
+            <div class="list-item"><span class="check">✓</span>Use job-specific keywords</div>
+            <div class="list-item"><span class="check">✓</span>Match your experience with job requirements</div>
+            <div class="list-item"><span class="check">✓</span>Improve your chances of getting shortlisted</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">9</div>
+          <div>
+            <h3>Automating the Job Application Process</h3>
+            <p>Understand which repetitive tasks ChatGPT can assist with in this system.</p>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>9.1 Core Responsibilities of ChatGPT</h4>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span>Finding job openings</div>
+            <div class="list-item"><span class="check">✓</span>Checking job match scores</div>
+            <div class="list-item"><span class="check">✓</span>Creating and updating spreadsheets</div>
+            <div class="list-item"><span class="check">✓</span>Customizing resumes</div>
+            <div class="list-item"><span class="check">✓</span>Preparing applications</div>
+            <div class="list-item"><span class="check">✓</span>Submitting applications</div>
+          </div>
+        </div>
+
+        <div class="lesson">
+          <h4>9.2 The Automation Advantage</h4>
+          <p>
+            ChatGPT can handle these tasks efficiently, even when you are not actively working on your job search.
+          </p>
+          <p>
+            This allows you to focus on important activities like preparing for interviews and networking.
+          </p>
+        </div>
+      </article>
+
+      
+
+
+      <article class="module">
+        <div class="module-header">
+          <div class="module-number">10</div>
+          <div>
+            <h3>Complete Workflow Summary</h3>
+            <p>A simple step-by-step view of the entire ChatGPT job search system.</p>
+          </div>
+        </div>
+
+        <div class="workflow">
+          <div class="step">Upload your resume into ChatGPT.</div>
+          <div class="step">Ask ChatGPT to act as a senior recruiter.</div>
+          <div class="step">Get twenty suitable job titles and ATS keywords.</div>
+          <div class="step">Ask ChatGPT to rewrite your resume into a master template.</div>
+          <div class="step">Use the Google XYZ formula to improve resume achievements.</div>
+          <div class="step">Turn on Agent mode.</div>
+          <div class="step">Ask ChatGPT Agent to search LinkedIn and Indeed.</div>
+          <div class="step">Find jobs posted in the last seven days.</div>
+          <div class="step">Build a spreadsheet with job links and match scores.</div>
+          <div class="step">Create custom-tailored resume versions for each job.</div>
+          <div class="step">Apply to the highest-matched jobs.</div>
+          <div class="step">Customize each application based on the job description.</div>
+        </div>
+      </article>
+
+      <article class="module" id="prompts">
+        <div class="module-header">
+          <div class="module-number">11</div>
+          <div>
+            <h3>All Prompts Used in the Course</h3>
+            <p>Use these prompts exactly as shown in the course.</p>
+          </div>
+        </div>
+
+        <div class="prompt-grid">
+          <div class="prompt-card">
+            <h4>Prompt 1</h4>
+            <p>"Act as a senior recruiter. Based on my resume, list the twenty job titles I'm most qualified for and the exact keywords ATS systems scan for in each."</p>
+            <button class="copy-btn" type="button" data-prompt="Act as a senior recruiter. Based on my resume, list the twenty job titles I'm most qualified for and the exact keywords ATS systems scan for in each.">Copy Prompt</button>
+          </div>
+          <div class="prompt-card">
+            <h4>Prompt 2</h4>
+            <p>"Rewrite my resume into a master template I can tailor instantly. Use the Google XYZ formula and strip every red flag a hiring manager spots in under ten seconds."</p>
+            <button class="copy-btn" type="button" data-prompt="Rewrite my resume into a master template I can tailor instantly. Use the Google XYZ formula and strip every red flag a hiring manager spots in under ten seconds.">Copy Prompt</button>
+          </div>
+          <div class="prompt-card">
+            <h4>Prompt 3</h4>
+            <p>"Go to LinkedIn and Indeed, find every job matching these titles posted in the last seven days. Build me a spreadsheet with the link, match score, and a custom-tailored resume version for each one."</p>
+            <button class="copy-btn" type="button" data-prompt="Go to LinkedIn and Indeed, find every job matching these titles posted in the last seven days. Build me a spreadsheet with the link, match score, and a custom-tailored resume version for each one.">Copy Prompt</button>
+          </div>
+          <div class="prompt-card">
+            <h4>Prompt 4</h4>
+            <p>"Apply to the top five hundred highest-matched jobs. Customize each application based on the job description."</p>
+            <button class="copy-btn" type="button" data-prompt="Apply to the top five hundred highest-matched jobs. Customize each application based on the job description.">Copy Prompt</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <h2>Ready to Use ChatGPT as Your Job Search Assistant?</h2>
+      <p>
+        Follow the modules step by step, prepare your resume, identify your best roles, organize your applications,
+        and use ChatGPT to make your job search more focused and efficient.
+      </p>
+    </footer>
+  </main>
+
+
+  <script>
+    // Reading progress bar
+    const progressFill = document.getElementById("progressFill");
+    const progressPercent = document.getElementById("progressPercent");
+
+    let displayedProgress = 0;
+    let reduceDelayTimer = null;
+
+    function getScrollProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+      if (documentHeight <= 0) return 100;
+
+      const progress = (scrollTop / documentHeight) * 100;
+      return Math.max(0, Math.min(100, Math.round(progress)));
+    }
+
+    function updateProgressBar(value) {
+      displayedProgress = value;
+      progressFill.style.width = value + "%";
+      progressPercent.textContent = value + "% progress";
+    }
+
+    function handleProgressScroll() {
+      const currentProgress = getScrollProgress();
+
+      if (currentProgress >= displayedProgress) {
+        clearTimeout(reduceDelayTimer);
+        updateProgressBar(currentProgress);
+      } else {
+        clearTimeout(reduceDelayTimer);
+        reduceDelayTimer = setTimeout(() => {
+          updateProgressBar(currentProgress);
+        }, 450);
+      }
+    }
+
+    window.addEventListener("scroll", handleProgressScroll, { passive: true });
+    window.addEventListener("resize", handleProgressScroll);
+    window.addEventListener("load", handleProgressScroll);
+    handleProgressScroll();
+  </script>
+
+  <script>
+    document.querySelectorAll(".copy-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const promptText = button.getAttribute("data-prompt");
+        const originalText = "Copy Prompt";
+
+        try {
+          await navigator.clipboard.writeText(promptText);
+          button.textContent = "Copied!";
+          button.classList.add("copied");
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove("copied");
+          }, 1600);
+        } catch (error) {
+          const textarea = document.createElement("textarea");
+          textarea.value = promptText;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+
+          button.textContent = "Copied!";
+          button.classList.add("copied");
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove("copied");
+          }, 1600);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
